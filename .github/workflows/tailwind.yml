@@ -1,0 +1,63 @@
+name: Tailwindcss build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Update
+        run: sudo apt update
+      - name: Install node
+        run: sudo apt install nodejs
+      - name: Install npm
+        run: sudo apt install npm
+      - name: Install tailwindcss
+        run: npm install -D tailwindcss
+      - name: Build tailwind app
+        working-directory: ./
+        run: npx tailwindcss -i ./src/in.css -o ./src/style.css
+      - name: Commit
+        continue-on-error: true
+        working-directory: ./
+        run: |
+          git add ./src/style.css
+          git config --global user.name 'Givinghawk'
+          git config --global user.email 'givinghawk@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "Tailwind build (AUTOMATED)"
+          git push
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
