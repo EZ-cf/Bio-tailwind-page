@@ -21,11 +21,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>John Doe</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+    @media (min-width: 768px) {
+  .nomobile {
+    display: none;
+  }
+}
+    </style>
 </head>
 <body class="bg-zinc-900 text-white overflow-hidden">
     <main class="grid place-content-center h-screen grid-rows-3 grid-flow-col w-full">
         <div class="flex items-center justify-center row-span-3 w-screen gap-10">
-            <div class="md:hidden">
+            <div class="nomob">
                 <img src="https://via.placeholder.com/500" alt="John Doe" class="rounded" width="500" height="500">
             </div>
             <div class="trow-span-3 col-span-2 grid w-1/3">
