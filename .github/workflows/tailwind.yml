@@ -65,6 +65,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - run: mkdir /lighthouse
       - run: mkdir /lighthouse/lighthouse
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@master
