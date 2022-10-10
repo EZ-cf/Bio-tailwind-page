@@ -60,6 +60,9 @@ jobs:
         uses: actions/deploy-pages@v1
   lighthouse:
     needs: deploy
+    environment:
+      name: lighthouse
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - run: mkdir /tmp/artifacts
