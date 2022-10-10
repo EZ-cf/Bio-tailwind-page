@@ -43,7 +43,7 @@ jobs:
         working-directory: ./
         run: |
           git add ./src/
-          git add ./lighthouse/
+          git add ./lighthouse/lighthouse/
           git config --global user.name 'EZBot'
           git config --global user.email 'EZDesignBot@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
