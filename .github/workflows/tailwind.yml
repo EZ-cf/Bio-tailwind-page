@@ -65,18 +65,18 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - run: mkdir /lighthouse
-      - run: mkdir /lighthouse/lighthouse
+      - run: mkdir ./lighthouse
+      - run: mkdir ./lighthouse/lighthouse
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
-          outputDirectory: /lighthouse/lighthouse
+          outputDirectory: ./lighthouse/lighthouse
           urls: 'https://bio.ezdesign.cf/'
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
            name: Lighthouse reports
-           path: /lighthouse/lighthouse
+           path: ./lighthouse/lighthouse
       - name: Commit
         continue-on-error: true
         working-directory: ./lighthouse
