@@ -26,6 +26,7 @@ jobs:
       - name: Build tailwind app
         working-directory: ./
         run: npx tailwindcss -i ./src/in.css -o ./src/style.css
+      - run: mkdir -p ./src/lighthouse
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
