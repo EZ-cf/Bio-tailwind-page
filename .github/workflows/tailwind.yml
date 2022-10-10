@@ -36,6 +36,9 @@ jobs:
         with:
            name: Lighthouse reports
            path: ./src/
+      - name: Rename every ligthouse report
+        working-directory: ./src
+        run: rename 'lighthouse' lighthouse*
       - name: Commit
         continue-on-error: true
         working-directory: ./
