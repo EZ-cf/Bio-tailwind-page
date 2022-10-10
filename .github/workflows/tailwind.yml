@@ -58,3 +58,18 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+  lighthouse:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - run: mkdir /tmp/artifacts
+      - name: Run Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          outputDirectory: /tmp/artifacts
+          urls: 'https://bio.ezdesign.cf/'
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+           name: Lighthouse reports
+           path: /tmp/artifacts
