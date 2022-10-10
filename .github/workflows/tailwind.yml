@@ -27,8 +27,6 @@ jobs:
         run: sudo apt update
       - name: Install node
         run: sudo apt install nodejs
-      - name: Install npm
-        run: sudo apt install npm
       - name: Install tailwindcss
         run: npm install -D tailwindcss
       - name: Build tailwind app
