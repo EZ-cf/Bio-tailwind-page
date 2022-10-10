@@ -42,7 +42,6 @@ jobs:
         continue-on-error: true
         working-directory: ./
         run: |
-          git add ./src/style.css
           git config --global user.name 'EZBot'
           git config --global user.email 'EZDesignBot@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
