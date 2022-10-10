@@ -65,14 +65,24 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - run: mkdir /tmp/artifacts
+      - run: mkdir /lighthouse/lighthouse
       - name: Run Lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
-          outputDirectory: /tmp/artifacts
+          outputDirectory: /lighthouse/lighthouse
           urls: 'https://bio.ezdesign.cf/'
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
            name: Lighthouse reports
-           path: /tmp/artifacts
+           path: /lighthouse/lighthouse
+      - name: Commit
+        continue-on-error: true
+        working-directory: ./lighthouse
+        run: |
+          git config --global user.name 'EZBot'
+          git config --global user.email 'EZDesignBot@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "Lighthouse report"
+          git push
