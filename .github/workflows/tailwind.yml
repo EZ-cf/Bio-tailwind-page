@@ -3,8 +3,6 @@ name: Tailwindcss build
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
   workflow_dispatch:
 
@@ -16,18 +14,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: tailwind
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - uses: actions/checkout@v3
       
-      - name: Update
-        run: sudo apt update
-      - name: Install node
-        run: sudo apt install nodejs
-      - name: Install npm
-        run: sudo apt install npm
-      - name: Install tailwindcss
-        run: npm install -D tailwindcss
       - name: Build tailwind app
         working-directory: ./
         run: npx tailwindcss -i ./src/in.css -o ./src/style.css
@@ -35,12 +28,12 @@ jobs:
         continue-on-error: true
         working-directory: ./
         run: |
-          git add ./src/style.css
-          git config --global user.name 'Givinghawk'
-          git config --global user.email 'givinghawk@users.noreply.github.com'
+          git add ./src/
+          git config --global user.name 'EZBot'
+          git config --global user.email 'EZDesignBot@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git checkout "${GITHUB_REF:11}"
-          git commit -am "Tailwind build (AUTOMATED)"
+          git commit -am "Tailwind build"
           git push
   deploy:
     needs: build
